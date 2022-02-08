@@ -4,11 +4,14 @@ use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\OutputStyle;
 use Padaliyajay\PHPAutoprefixer\Autoprefixer;
 
+$themeModulesFolderUrl = is_dir(get_stylesheet_directory()."/modules") ? get_stylesheet_directory_uri()."/modules" : get_stylesheet_directory_uri();
+$themeModulesFolderPath = is_dir(get_stylesheet_directory()."/modules") ? get_stylesheet_directory()."/modules" : get_stylesheet_directory();
+
 if(!defined("DIST_URL")){
-  define("DIST_URL", get_stylesheet_directory_uri());
+  define("DIST_URL", $themeModulesFolderUrl);
 }
 if(!defined("DIST_PATH")){
-  define("DIST_PATH", get_stylesheet_directory());
+  define("DIST_PATH", $themeModulesFolderPath);
 }
 
 $cssFileModules = MODULES_DIR . "/modules.css";
@@ -17,15 +20,10 @@ $cssFileTheme = DIST_PATH . "/bundle.css";
 $cssEditorFileTheme = DIST_PATH . "/bundle.editor.css";
 
 if( isset($_GET['c']) || isset($_GET['compile']) || !file_exists($cssFileModules) || !file_exists($cssEditorFileModules)|| !file_exists($cssFileTheme) || !file_exists($cssEditorFileTheme) ){
-  // if (!is_dir(DIST_PATH)) {
-  //   mkdir(DIST_PATH);
-  // }
-
   require_once dirname( __FILE__ ).'/vendor/autoload.php';
 
   $compiler = new Compiler();
   $compiler->setOutputStyle( OutputStyle::COMPRESSED ); // this is not working. WHY?
-  $themeModulesFolder = get_stylesheet_directory();
 
   $cssContentModules = '';
   $cssEditorContentModules = '';
@@ -64,11 +62,11 @@ if( isset($_GET['c']) || isset($_GET['compile']) || !file_exists($cssFileModules
         }
       }
     }
-    foreach (glob("{$themeModulesFolder}/*") as $themeModule) {
+    foreach (glob("{$themeModulesFolderPath}/*") as $themeModule) {
       $basename = basename($themeModule);
       if (substr($basename, 0, strlen($prefix)) === $prefix) {
-        $scssFile = "{$themeModulesFolder}/$basename/$basename.scss";
-        $compiler->addImportPath( "{$themeModulesFolder}/$basename/" );
+        $scssFile = "{$themeModulesFolderPath}/$basename/$basename.scss";
+        $compiler->addImportPath( "{$themeModulesFolderPath}/$basename/" );
         $scssContent = trim(@file_get_contents( $scssFile ));
         if($scssContent){
           try {
@@ -81,8 +79,8 @@ if( isset($_GET['c']) || isset($_GET['compile']) || !file_exists($cssFileModules
             $compilerError = true;
           }
         }
-        $scssEditorFile = "{$themeModulesFolder}/$basename/$basename.editor.scss";
-        $compiler->addImportPath( "{$themeModulesFolder}/$basename/" );
+        $scssEditorFile = "{$themeModulesFolderPath}/$basename/$basename.editor.scss";
+        $compiler->addImportPath( "{$themeModulesFolderPath}/$basename/" );
         $scssEditorContent = trim(@file_get_contents( $scssEditorFile ));
         if($scssEditorContent){
           try {

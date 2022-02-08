@@ -6,7 +6,7 @@ Compiles and bundles all module SCSS files.
 
 ---
 
-Version: 1.2.3
+Version: 1.3.0
 
 Author: Matze @ https://modularity.group
 
@@ -32,6 +32,10 @@ if `// generate_editor_styles=true` is found during compile in a module's scss f
 Note: all modules of one type (f.e. config-*) are loaded in one run for both folders
 
 ---
+
+1.3.0
+- EXTEND loader check for theme-modules in `/themefolder/modules`. fallback `/themefolder` and save+enqueue bundle respectively
+- UPDATE scsspp 1.9.0 > 1.10.0
 
 1.2.3
 - Add option to force editor-style creation of standard scss files with flag: `// generate_editor_styles=true` saved in respective file
