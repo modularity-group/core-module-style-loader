@@ -6,7 +6,7 @@ Compiles and bundles all module SCSS files.
 
 ---
 
-Version: 1.3.0
+Version: 1.4.0
 
 Author: Matze @ https://modularity.group
 
@@ -32,6 +32,9 @@ if `// generate_editor_styles=true` is found during compile in a module's scss f
 Note: all modules of one type (f.e. config-*) are loaded in one run for both folders
 
 ---
+
+1.4.0
+- ADD optional submodules feature: put (sub)modules in `/{modulename}/modules/` folder
 
 1.3.0
 - EXTEND loader check for theme-modules in `/themefolder/modules`. fallback `/themefolder` and save+enqueue bundle respectively
