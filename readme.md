@@ -14,18 +14,34 @@ License: MIT
 
 ---
 
-Compile all Theme 
+Compile all
 
-- *module-name*/*module-name*.scss
-- *module-name*/*module-name*.editor.scss
+- `modules/{module-name}/{module-name}.scss`
+- `modules/{module-name}/{module-name}.editor.scss`
+
+and
+
+- `theme/{module-name}/{module-name}.scss`
+- `theme/{module-name}/{module-name}.editor.scss`
+
+or
+
+- `theme/modules/{module-name}/{module-name}.scss`
+- `theme/modules/{module-name}/{module-name}.editor.scss`
+
+and for each module
+
+- `{module-name}/modules/{submodule-name}/{submodule-name}.scss`
+- `{module-name}/modules/{submodule-name}/{submodule-name}.editor.scss`
 
 files in order 
 
+- core-*
 - config-*
 - wp-block-*
 - feature-* 
 
-to */wp-content/modules/* and */wp-content/themes/-theme-/* when url-parameter *?c* is set and enqueue to frontend and editor before themes style.css.
+to `/wp-content/modules/` and `/wp-content/themes/{theme}/` when url-parameter *?c* is set and enqueue to frontend and editor before themes style.css.
 
 if `// generate_editor_styles=true` is found during compile in a module's scss file, this scss content will be wrapped with `.editor-style-wrapper` and saved also to `modules.editor.css` or `bundle.editor.css`.
 
