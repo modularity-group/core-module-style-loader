@@ -62,32 +62,34 @@ if( isset($_GET['c']) || isset($_GET['compile']) || !file_exists($cssFileModules
         }
       }
       // <SUBMODULES>
-      foreach (glob(MODULES_DIR."/".$basename."/modules/*") as $librarySubModule) {
-        $basenameSub = basename($librarySubModule);
-        if (substr($basenameSub, 0, strlen($prefix)) === $prefix) {
-          $scssFile = MODULES_DIR."/$basename/modules/$basenameSub/$basenameSub.scss";
-          $compiler->addImportPath( MODULES_DIR."/$basename/modules/$basenameSub/" );
-          $scssContent = trim(@file_get_contents( $scssFile ));
-          if($scssContent){
-            try {
-              $cssContentModules .= $compiler->compile( $scssContent );
-              if(strpos($scssContent,'generate_editor_styles=true')){
-                $cssEditorContentModules .= $compiler->compile( '.editor-styles-wrapper {'.$scssContent.'}' );
+      if(glob(MODULES_DIR."/".$basename."/modules/*")){
+        foreach (glob(MODULES_DIR."/".$basename."/modules/*") as $librarySubModule) {
+          $basenameSub = basename($librarySubModule);
+          if (substr($basenameSub, 0, strlen($prefix)) === $prefix) {
+            $scssFile = MODULES_DIR."/$basename/modules/$basenameSub/$basenameSub.scss";
+            $compiler->addImportPath( MODULES_DIR."/$basename/modules/$basenameSub/" );
+            $scssContent = trim(@file_get_contents( $scssFile ));
+            if($scssContent){
+              try {
+                $cssContentModules .= $compiler->compile( $scssContent );
+                if(strpos($scssContent,'generate_editor_styles=true')){
+                  $cssEditorContentModules .= $compiler->compile( '.editor-styles-wrapper {'.$scssContent.'}' );
+                }
+              } catch(Exception $e1) {
+                echo 'Compiler error in '.$scssFile.':<br>' .$e1->getMessage();
+                $compilerError = true;
               }
-            } catch(Exception $e1) {
-              echo 'Compiler error in '.$scssFile.':<br>' .$e1->getMessage();
-              $compilerError = true;
             }
-          }
-          $scssEditorFile = MODULES_DIR."/$basename/modules/$basenameSub/$basenameSub.editor.scss";
-          $compiler->addImportPath( MODULES_DIR."/$basename/modules/$basenameSub/" );
-          $scssEditorContent = trim(@file_get_contents( $scssEditorFile ));
-          if($scssEditorContent){
-            try {
-              $cssEditorContentModules .= $compiler->compile( $scssEditorContent );
-            } catch(Exception $e2) {
-              echo 'Compiler error in '.$scssEditorFile.':<br>' .$e2->getMessage();
-              $compilerError = true;
+            $scssEditorFile = MODULES_DIR."/$basename/modules/$basenameSub/$basenameSub.editor.scss";
+            $compiler->addImportPath( MODULES_DIR."/$basename/modules/$basenameSub/" );
+            $scssEditorContent = trim(@file_get_contents( $scssEditorFile ));
+            if($scssEditorContent){
+              try {
+                $cssEditorContentModules .= $compiler->compile( $scssEditorContent );
+              } catch(Exception $e2) {
+                echo 'Compiler error in '.$scssEditorFile.':<br>' .$e2->getMessage();
+                $compilerError = true;
+              }
             }
           }
         }
@@ -124,32 +126,34 @@ if( isset($_GET['c']) || isset($_GET['compile']) || !file_exists($cssFileModules
         }
       }
       // <SUBMODULES>
-      foreach (glob("{$themeModulesFolderPath}/$basename/modules/*") as $themeSubModule) {
-        $basenameSub = basename($themeSubModule);
-        if (substr($basenameSub, 0, strlen($prefix)) === $prefix) {
-          $scssFile = "{$themeModulesFolderPath}/$basename/modules/$basenameSub/$basenameSub.scss";
-          $compiler->addImportPath( "{$themeModulesFolderPath}/$basename/modules/$basenameSub/" );
-          $scssContent = trim(@file_get_contents( $scssFile ));
-          if($scssContent){
-            try {
-              $cssContentTheme .= $compiler->compile( $scssContent );
-              if(strpos($scssContent,'generate_editor_styles=true')){
-                $cssEditorContentTheme .= $compiler->compile( '.editor-styles-wrapper {'.$scssContent.'}' );
+      if(glob("{$themeModulesFolderPath}/$basename/modules/*")){
+        foreach (glob("{$themeModulesFolderPath}/$basename/modules/*") as $themeSubModule) {
+          $basenameSub = basename($themeSubModule);
+          if (substr($basenameSub, 0, strlen($prefix)) === $prefix) {
+            $scssFile = "{$themeModulesFolderPath}/$basename/modules/$basenameSub/$basenameSub.scss";
+            $compiler->addImportPath( "{$themeModulesFolderPath}/$basename/modules/$basenameSub/" );
+            $scssContent = trim(@file_get_contents( $scssFile ));
+            if($scssContent){
+              try {
+                $cssContentTheme .= $compiler->compile( $scssContent );
+                if(strpos($scssContent,'generate_editor_styles=true')){
+                  $cssEditorContentTheme .= $compiler->compile( '.editor-styles-wrapper {'.$scssContent.'}' );
+                }
+              } catch(Exception $e1) {
+                echo 'Compiler error in '.$scssFile.':<br>' .$e1->getMessage();
+                $compilerError = true;
               }
-            } catch(Exception $e1) {
-              echo 'Compiler error in '.$scssFile.':<br>' .$e1->getMessage();
-              $compilerError = true;
             }
-          }
-          $scssEditorFile = "{$themeModulesFolderPath}/$basename/modules/$basenameSub/$basenameSub.editor.scss";
-          $compiler->addImportPath( "{$themeModulesFolderPath}/$basename/modules/$basenameSub/" );
-          $scssEditorContent = trim(@file_get_contents( $scssEditorFile ));
-          if($scssEditorContent){
-            try {
-              $cssEditorContentTheme .= $compiler->compile( $scssEditorContent );
-            } catch(Exception $e2) {
-              echo 'Compiler error in '.$scssEditorFile.':<br>' .$e2->getMessage();
-              $compilerError = true;
+            $scssEditorFile = "{$themeModulesFolderPath}/$basename/modules/$basenameSub/$basenameSub.editor.scss";
+            $compiler->addImportPath( "{$themeModulesFolderPath}/$basename/modules/$basenameSub/" );
+            $scssEditorContent = trim(@file_get_contents( $scssEditorFile ));
+            if($scssEditorContent){
+              try {
+                $cssEditorContentTheme .= $compiler->compile( $scssEditorContent );
+              } catch(Exception $e2) {
+                echo 'Compiler error in '.$scssEditorFile.':<br>' .$e2->getMessage();
+                $compilerError = true;
+              }
             }
           }
         }
