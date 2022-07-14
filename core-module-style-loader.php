@@ -31,7 +31,7 @@ if( isset($_GET['c']) || isset($_GET['compile']) || !file_exists($cssFileModules
   $cssEditorContentTheme = '';
   $compilerError = false;
 
-  foreach (array("core", "config", "wp-block", "feature") as $prefix) {
+  foreach (array("core", "config", "wp-block", "block", "feature") as $prefix) {
     foreach (glob(MODULES_DIR."/*") as $libraryModule) {
       $basename = basename($libraryModule);
       if (substr($basename, 0, strlen($prefix)) === $prefix) {
