@@ -45,7 +45,9 @@ if( isset($_GET['c']) || isset($_GET['compile']) || !file_exists($cssFileModules
               $cssEditorContentModules .= $compiler->compile( '.editor-styles-wrapper {'.$scssContent.'}' );
             }
           } catch(Exception $e1) {
-            echo 'Compiler error in '.$scssFile.':<br>' .$e1->getMessage();
+            if( isset($_GET['c']) || isset($_GET['compile']) ) {
+              echo 'Compiler error in '.$scssFile.':<br>' .$e1->getMessage();
+            }
             $compilerError = true;
           }
         }
@@ -56,7 +58,9 @@ if( isset($_GET['c']) || isset($_GET['compile']) || !file_exists($cssFileModules
           try {
             $cssEditorContentModules .= $compiler->compile( $scssEditorContent );
           } catch(Exception $e2) {
-            echo 'Compiler error in '.$scssEditorFile.':<br>' .$e2->getMessage();
+            if( isset($_GET['c']) || isset($_GET['compile']) ) {
+              echo 'Compiler error in '.$scssEditorFile.':<br>' .$e2->getMessage();
+            }
             $compilerError = true;
           }
         }
@@ -183,7 +187,9 @@ if( isset($_GET['c']) || isset($_GET['compile']) || !file_exists($cssFileModules
     $prefixedCssEditorContent = $autoprefixerEditor->compile();
     file_put_contents( $cssEditorFileTheme, $prefixedCssEditorContent );
   } else {
-    die('<br>Nothing compiled because of errors!');
+    if( isset($_GET['c']) || isset($_GET['compile']) ) {
+      echo '<br>Nothing compiled because of errors!';
+    }
   }
 }
 

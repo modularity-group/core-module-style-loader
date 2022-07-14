@@ -6,7 +6,7 @@ Compiles and bundles all module SCSS files.
 
 ---
 
-Version: 1.4.2
+Version: 1.4.3
 
 Author: Matze @ https://modularity.group
 
@@ -48,6 +48,9 @@ if `// generate_editor_styles=true` is found during compile in a module's scss f
 Note: all modules of one type (f.e. config-*) are loaded in one run for both folders
 
 ---
+
+1.4.3
+- better show/hide compile errors
 
 1.4.2
 - allow module prefix "block-"
